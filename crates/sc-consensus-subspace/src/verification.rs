@@ -160,7 +160,10 @@ pub(crate) fn check_piece<B: BlockT>(
 }
 
 /// Returns true if `solution.tag` is within the solution range.
-fn is_within_solution_range(solution: &Solution<FarmerPublicKey>, solution_range: u64) -> bool {
+pub(crate) fn is_within_solution_range(
+    solution: &Solution<FarmerPublicKey>,
+    solution_range: u64,
+) -> bool {
     let target = u64::from_be_bytes(solution.local_challenge.derive_target());
     let (lower, is_lower_overflowed) = target.overflowing_sub(solution_range / 2);
     let (upper, is_upper_overflowed) = target.overflowing_add(solution_range / 2);
