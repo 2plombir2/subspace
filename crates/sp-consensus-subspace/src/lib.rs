@@ -157,6 +157,10 @@ pub struct SolutionRanges {
     pub current: u64,
     /// Solution range that will be used in the next block/era.
     pub next: Option<u64>,
+    /// Voting solution range in current block/era.
+    pub voting_current: u64,
+    /// Voting solution range that will be used in the next block/era.
+    pub voting_next: Option<u64>,
 }
 
 impl Default for SolutionRanges {
@@ -164,6 +168,8 @@ impl Default for SolutionRanges {
         Self {
             current: u64::MAX,
             next: None,
+            voting_current: u64::MAX,
+            voting_next: None,
         }
     }
 }
