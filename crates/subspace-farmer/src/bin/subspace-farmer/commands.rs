@@ -1,6 +1,8 @@
+mod bench;
 mod farm;
 
-pub(crate) use farm::{bench, farm};
+pub(crate) use bench::bench;
+pub(crate) use farm::farm;
 use log::info;
 use std::path::Path;
 use std::{fs, io};
