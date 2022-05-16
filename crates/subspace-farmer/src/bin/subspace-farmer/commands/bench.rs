@@ -16,6 +16,7 @@ use subspace_core_primitives::{
 use subspace_farmer::multi_farming::{MultiFarming, Options as MultiFarmingOptions};
 use subspace_farmer::{ObjectMappings, PieceOffset, Plot, PlotFile, RpcClient};
 use subspace_rpc_primitives::FarmerMetadata;
+use tokio::time::Instant;
 
 use crate::bench_rpc_client::BenchRpcClient;
 use crate::{utils, WriteToDisk};
@@ -127,6 +128,8 @@ pub(crate) async fn bench(
     )
     .await?;
 
+    let start = Instant::now();
+
     tokio::spawn(async move {
         let mut last_archived_block = LastArchivedBlock {
             number: 0,
@@ -173,6 +176,11 @@ pub(crate) async fn bench(
         }
     })
     .await?;
+
+    info!(
+        "Finished benchmarking. Speed is {:.2}M/s",
+        write_pieces_size as f64 / 1000. / 1000. / start.elapsed().as_secs_f64()
+    );
 
     client.stop().await;
 
